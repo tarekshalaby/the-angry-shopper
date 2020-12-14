@@ -3,23 +3,22 @@ import requests
 from re import sub
 from decimal import Decimal
 from datetime import datetime
-import sqlite3
+import mysql.connector
+import os
 
-## Connect to sqlite database and then creae a table for Gourmet's products
-connection = sqlite3.connect('cairo-supermarkets.db')
-cursor = connection.cursor()
+# MySQL database credentials
+db_user = os.environ.get('DB_USER')
+db_pass = os.environ.get('DB_PASS')
 
-cursor.execute("""CREATE TABLE IF NOT EXISTS 
-					gourmet_products(
-						id INTEGER,
-						title TEXT,
-						size TEXT,
-						url TEXT,
-						price REAL,
-						image TEXT,
-						category TEXT,
-						updated TEXT
-					)""")
+# Connect to the main "the_angry_shopper" database and start connection
+db = mysql.connector.connect(
+		host="localhost",
+		user=db_user,
+		passwd=db_pass,
+		database="the_angry_shopper"
+	)
+
+cursor = db.cursor()
 
 ## Main URL to scrape from Gourmet
 base_url = 'https://www.gourmetegypt.com'
