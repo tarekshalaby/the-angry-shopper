@@ -1,0 +1,2 @@
+# the-angry-shopper
+Scraping Cairo's supermarkets to compare prices and track changes.
