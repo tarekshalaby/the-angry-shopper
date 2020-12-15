@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
 from re import sub
-from decimal import Decimal
 from datetime import datetime
 import mysql.connector
 import os
@@ -20,13 +19,14 @@ db = mysql.connector.connect(
 
 cursor = db.cursor()
 
-## Main URL to scrape from Gourmet
+# Main URL to scrape from Gourmet
 base_url = 'https://www.gourmetegypt.com'
 
+# Get the content of the website. Use BeautifulSoup to parse it.
 source =  requests.get(base_url).text
 soup =  BeautifulSoup(source, 'lxml')
 
-## Loop to get the main sections on the Gourmet website
+# Loop to get the main sections on the Gourmet website
 for nav in soup.find_all('li', class_='ms-level0'):
 	category_path = nav.find('a')['href'].split('/')[1]
 	category_url = f'{base_url}/{category_path}'
@@ -67,12 +67,19 @@ for nav in soup.find_all('li', class_='ms-level0'):
 							price = None
 						image = product.find('img', class_='product-image-photo')['src'].strip()
 						now = datetime.utcnow()
-						format = "%d/%m/%Y %H:%M"
+						format = "%Y-%m-%d %H:%M:%S"
 						updated = now.strftime(format)
 
+						# Preparing SQL query to INSERT a record into the database.
+						insert_statement = (
+						   "INSERT INTO gourmet_products(product_id, title, size, price, url, image, category, updated)"
+						   "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+						)
+						insert_data = (id, title, size, price, url, image, sub_category_name, updated)
+
 						# Insert product info into database
-						cursor.execute("INSERT INTO gourmet_products VALUES (?,?,?,?,?,?,?,?)", (id, title, size, url, price, image, sub_category_name, updated))
-						connection.commit()
+						cursor.execute(insert_statement, insert_data)
+						db.commit()
 
 						# Add 1 to the counter 
 						products_scraped +=1
