@@ -1,24 +1,23 @@
 from bs4 import BeautifulSoup
 import requests
 import re
-from decimal import Decimal
 from datetime import datetime
-import sqlite3
+import mysql.connector
+import os
 
-## Connect to sqlite database and then creae a table for Gourmet's products
-connection = sqlite3.connect('cairo-supermarkets.db')
-cursor = connection.cursor()
+# MySQL database credentials
+db_user = os.environ.get('DB_USER')
+db_pass = os.environ.get('DB_PASS')
 
-cursor.execute("""CREATE TABLE IF NOT EXISTS 
-					metro_products(
-						id INTEGER,
-						title TEXT,
-						url TEXT,
-						price REAL,
-						image TEXT,
-						category TEXT,
-						updated TEXT
-					)""")
+# Connect to the main "the_angry_shopper" database and start connection
+db = mysql.connector.connect(
+		host="localhost",
+		user=db_user,
+		passwd=db_pass,
+		database="the_angry_shopper"
+	)
+
+cursor = db.cursor()
 
 # URLs of the different sections to scrape from Metro
 sections = ['Bakery/9', 'Beverage/22', 'Canned-Food/14', 'Confectionary/20', 'Dairy/6', 'Deli/5', 'Eatery/2', 'Fresh-Juices/8', 'Frozen-Food/10', 'Fruits/1', 'Commodities/15', 'Health&-Beauty/28', 'Home-Bake/16', 'Hot-Drinks/21', 'Meat/11', 'Milk/18', 'Paper-Products/25', 'Pets/17', 'Poultry/12', 'Sea-Food/13', 'Snacks/19', 'Vegetables/3']
@@ -61,12 +60,19 @@ for section in sections:
 				image_file_name = re.search('[A-Za-z0-9.]+$', image_compressed)
 				image = f'https://www.metro-markets.com/storage/products/{image_file_name.group()}'
 				now = datetime.utcnow()
-				format = "%d/%m/%Y %H:%M"
+				format = "%Y-%m-%d %H:%M:%S"
 				updated = now.strftime(format)
 
+				# Preparing SQL query to INSERT a record into the database.
+				insert_statement = (
+				   "INSERT INTO gourmet_products(product_id, title, price, url, image, category, updated)"
+				   "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+				)
+				insert_data = (id, title, price, url, image, sub_category_name, updated)
+
 				# Insert product info into database
-				cursor.execute("INSERT INTO metro_products VALUES (?,?,?,?,?,?,?)", (id, title, url, price, image, category, updated))
-				connection.commit()
+				cursor.execute(insert_statement, insert_data)
+				db.commit()
 
 				products_scraped +=1
 
