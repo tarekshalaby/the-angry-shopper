@@ -33,7 +33,7 @@ for nav in soup.find_all('li', class_='ms-level0'):
 	if category_path not in ['weber-grills', 'household']:
 		source =  requests.get(category_url).text
 		soup =  BeautifulSoup(source, 'lxml')
-        # Loop through each of the subcategories
+		# Loop through each of the subcategories
 		for list_item in soup.find('div', class_='top-category-links').find_all('li'):
 			sub_category_name = list_item.find('a').text.strip()
 			sub_category_link = list_item.find('a')['href']
