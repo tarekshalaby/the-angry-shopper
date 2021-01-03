@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Compare prices across supermarkets{% endblock %}
+
+{% block page_headline %}Compare prices across supermarkets{% endblock %}
+
+{% block aside_list %}
+
+<div class="column is-one-fifth">
+    <aside class="menu">
+        <ul class="menu-list is-size-6 has-text-weight-medium">
+            <li>
+                <a href="{{ url_for('compare_latest') }}" class="is-flex is-align-items-center {% if not path %}has-text-primary-dark has-background-primary-light{% endif %}">
+                    <span class="icon is-large is-size-3">
+                        <span class="iconify" data-icon="gg:live-photo"></span>
+                    </span>
+                    <span class="is-hidden-mobile">Latest Changes</span>
+                </a>
+            </li>
+            <li class="menu-label">Sections</li>
+
+            {% for category in categories %}
+
+            <li>
+                <a href="{{ url_for('compare_category', category=category.path) }}" class="is-flex is-align-items-center {% if path == '/compare/' + category.path %}has-text-primary-dark has-background-primary-light{% endif %}">
+                    <span class="icon is-large is-size-3">
+                        <span class="iconify" data-icon="{{ category.icon }}"></span>
+                    </span>
+                    <span class="is-hidden-mobile">{{ category.title }}</span>
+                </a>
+            </li>
+
+            {% endfor %}
+        </ul>
+    </aside>
+</div>
+
+{% endblock %}
+
+{% block section_icon %}
+    {% if active_category %}
+        <span class="iconify" data-icon="{{ active_category.icon }}"></span>
+    {% else %}
+        <span class="iconify" data-icon="gg:live-photo"></span>
+    {% endif %}
+{% endblock %}
+
+{% block section_title %}
+    {% if active_category %}
+        {{ active_category.title }}
+    {% else %}
+        Latest Changes
+    {% endif %}
+{% endblock %}
+
+{% block section_subtitle %}{{ count }} products compared.{% endblock %}
+
+{% block section_table %}
+
+<table class="table is-hoverable is-fullwidth has-text-weight-medium">
+    <thead>
+        <tr>
+            <th class="thumbnail-column"></th>
+            <th></th>
+            <th class="price-column">
+                <a href="#"><img src="{{ url_for('static', filename='images/gourmet.png') }}" alt="Gourmet"></a>
+            </th>    
+            <th class="price-column">
+                <a href="#"><img src="{{ url_for('static', filename='images/metro.svg') }}" alt="Metro"></a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    	{% for product in products %}
+        <tr>
+            <td>
+                <img src="{{ url_for('static', filename='images/placeholders/heinz_carolina_vinegar_gourmet.jpg') }}" alt="{{ product.title }}">
+            </td>
+            <td>
+                {{ product.title }}
+            </td>
+            <td class="has-text-right">
+                <span class="is-hidden-mobile">LE</span> {{ product.price }}
+            </td>
+            <td class="has-text-right has-text-success-dark has-background-success-light">
+                <span class="is-hidden-mobile">LE</span> 49.00
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

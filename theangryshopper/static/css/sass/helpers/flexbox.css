@@ -1,0 +1,217 @@
+/* line 3, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-direction-row {
+  flex-direction: row !important; }
+
+/* line 3, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-direction-row-reverse {
+  flex-direction: row-reverse !important; }
+
+/* line 3, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-direction-column {
+  flex-direction: column !important; }
+
+/* line 3, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-direction-column-reverse {
+  flex-direction: column-reverse !important; }
+
+/* line 8, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-wrap-nowrap {
+  flex-wrap: nowrap !important; }
+
+/* line 8, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-wrap-wrap {
+  flex-wrap: wrap !important; }
+
+/* line 8, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-wrap-wrap-reverse {
+  flex-wrap: wrap-reverse !important; }
+
+/* line 13, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-justify-content-flex-start {
+  justify-content: flex-start !important; }
+
+/* line 13, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-justify-content-flex-end {
+  justify-content: flex-end !important; }
+
+/* line 13, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-justify-content-center {
+  justify-content: center !important; }
+
+/* line 13, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-justify-content-space-between {
+  justify-content: space-between !important; }
+
+/* line 13, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-justify-content-space-around {
+  justify-content: space-around !important; }
+
+/* line 13, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-justify-content-space-evenly {
+  justify-content: space-evenly !important; }
+
+/* line 13, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-justify-content-start {
+  justify-content: start !important; }
+
+/* line 13, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-justify-content-end {
+  justify-content: end !important; }
+
+/* line 13, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-justify-content-left {
+  justify-content: left !important; }
+
+/* line 13, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-justify-content-right {
+  justify-content: right !important; }
+
+/* line 18, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-content-flex-start {
+  align-content: flex-start !important; }
+
+/* line 18, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-content-flex-end {
+  align-content: flex-end !important; }
+
+/* line 18, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-content-center {
+  align-content: center !important; }
+
+/* line 18, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-content-space-between {
+  align-content: space-between !important; }
+
+/* line 18, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-content-space-around {
+  align-content: space-around !important; }
+
+/* line 18, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-content-space-evenly {
+  align-content: space-evenly !important; }
+
+/* line 18, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-content-stretch {
+  align-content: stretch !important; }
+
+/* line 18, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-content-start {
+  align-content: start !important; }
+
+/* line 18, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-content-end {
+  align-content: end !important; }
+
+/* line 18, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-content-baseline {
+  align-content: baseline !important; }
+
+/* line 23, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-items-stretch {
+  align-items: stretch !important; }
+
+/* line 23, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-items-flex-start {
+  align-items: flex-start !important; }
+
+/* line 23, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-items-flex-end {
+  align-items: flex-end !important; }
+
+/* line 23, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-items-center {
+  align-items: center !important; }
+
+/* line 23, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-items-baseline {
+  align-items: baseline !important; }
+
+/* line 23, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-items-start {
+  align-items: start !important; }
+
+/* line 23, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-items-end {
+  align-items: end !important; }
+
+/* line 23, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-items-self-start {
+  align-items: self-start !important; }
+
+/* line 23, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-items-self-end {
+  align-items: self-end !important; }
+
+/* line 28, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-self-auto {
+  align-self: auto !important; }
+
+/* line 28, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-self-flex-start {
+  align-self: flex-start !important; }
+
+/* line 28, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-self-flex-end {
+  align-self: flex-end !important; }
+
+/* line 28, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-self-center {
+  align-self: center !important; }
+
+/* line 28, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-self-baseline {
+  align-self: baseline !important; }
+
+/* line 28, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-align-self-stretch {
+  align-self: stretch !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-grow-0 {
+  flex-grow: 0 !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-grow-1 {
+  flex-grow: 1 !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-grow-2 {
+  flex-grow: 2 !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-grow-3 {
+  flex-grow: 3 !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-grow-4 {
+  flex-grow: 4 !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-grow-5 {
+  flex-grow: 5 !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-shrink-0 {
+  flex-shrink: 0 !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-shrink-1 {
+  flex-shrink: 1 !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-shrink-2 {
+  flex-shrink: 2 !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-shrink-3 {
+  flex-shrink: 3 !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-shrink-4 {
+  flex-shrink: 4 !important; }
+
+/* line 34, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/helpers/flexbox.sass */
+.is-flex-shrink-5 {
+  flex-shrink: 5 !important; }
+
+/*# sourceMappingURL=flexbox.css.map */

@@ -1,0 +1,82 @@
+/*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
+/* line 3, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/base/minireset.sass */
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0; }
+
+/* line 30, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/base/minireset.sass */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal; }
+
+/* line 40, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/base/minireset.sass */
+ul {
+  list-style: none; }
+
+/* line 44, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/base/minireset.sass */
+button,
+input,
+select,
+textarea {
+  margin: 0; }
+
+/* line 51, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/base/minireset.sass */
+html {
+  box-sizing: border-box; }
+
+/* line 55, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/base/minireset.sass */
+*, *::before, *::after {
+  box-sizing: inherit; }
+
+/* line 61, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/base/minireset.sass */
+img,
+video {
+  height: auto;
+  max-width: 100%; }
+
+/* line 67, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/base/minireset.sass */
+iframe {
+  border: 0; }
+
+/* line 71, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/base/minireset.sass */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 75, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/base/minireset.sass */
+td,
+th {
+  padding: 0; }
+  /* line 78, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/base/minireset.sass */
+  td:not([align]),
+  th:not([align]) {
+    text-align: inherit; }
+
+/*# sourceMappingURL=minireset.css.map */

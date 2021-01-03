@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Compare prices across supermarkets{% endblock %}
+
+{% block page_headline %}Browse Cairo's supermarkets{% endblock %}
+
+{% block aside_list %}
+
+<div class="column is-one-fifth">
+    <div class="dropdown is-hoverable mb-5">
+        <div class="dropdown-trigger">
+            <button class="button is-large" aria-haspopup="true" aria-controls="supermarkets-list">
+                <img src="{{ url_for('static', filename='images/gourmet.png')}}" alt="Gourmet Egypt">
+            </button>
+        </div>
+        <div class="dropdown-menu" id="supermarkets-list" role="menu">
+            <div class="dropdown-content">
+                <div class="dropdown-item">
+                    <button class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu4">
+                        <img src="{{ url_for('static', filename='images/metro.svg')}}" alt="Metro Supermarket">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aside class="menu">
+        <ul class="menu-list is-size-6 has-text-weight-medium">
+            <li>
+                <a href="#" class="has-text-primary-dark has-background-primary-light is-flex is-align-items-center">
+                    <span class="icon is-large is-size-3">
+                        <span class="iconify" data-icon="gg:live-photo"></span>
+                    </span>
+                    <span class="is-hidden-mobile">Latest Changes</span>
+                </a>
+            </li>
+            <li class="menu-label">Sections</li>
+
+	            {% for category in categories %}
+
+	            <li>
+	                <a href="{{ url_for('browse_supermarket_latest', supermarket=category.path) }}" class="is-flex is-align-items-center {% if path == '/compare/' + category.path %}has-text-primary-dark has-background-primary-light{% endif %}">
+	                    <span class="icon is-large is-size-3">
+	                        <span class="iconify" data-icon="{{ category.icon }}"></span>
+	                    </span>
+	                    <span class="is-hidden-mobile">{{ category.title }}</span>
+	                </a>
+	            </li>
+
+	            {% endfor %}
+        </ul>
+    </aside>
+</div>
+
+{% endblock %}
+
+{% block section_icon %}
+    {% if active_category %}
+        <span class="iconify" data-icon="{{ active_category.icon }}"></span>
+    {% else %}
+        <span class="iconify" data-icon="gg:live-photo"></span>
+    {% endif %}
+{% endblock %}
+
+{% block section_title %}
+    {% if active_category %}
+        {{ active_category.title }}
+    {% else %}
+        Latest Changes
+    {% endif %}
+{% endblock %}
+
+{% block section_subtitle %}{{ count }} products.{% endblock %}
+
+{% block section_table %}
+
+{{ test }}
+
+<table class="table is-hoverable is-fullwidth has-text-weight-medium">
+    <thead>
+        <tr>
+            <th class="thumbnail-column"></th>
+            <th></th>
+            <th class="price-column">
+            </th>    
+            <th class="change-column"></th>
+            <th class="updated-column is-hidden-mobile"></th>
+        </tr>
+    </thead>
+    <tbody>
+    	{% for product in products %}
+        <tr>
+            <td>
+                <img src="{{ url_for('static', filename='images/placeholders/heinz_carolina_vinegar_gourmet.jpg') }}" alt="{{ product.title }}">
+            </td>
+            <td>
+                {{ product.title }} <a href="{{ product.url }}" target="_blank" class="is-size-6"><span class="iconify" data-icon="eva:external-link-fill"></span></a><br>
+                <small class="has-text-weight-light has-text-grey-light"><span class="has-text-success has-text-weight-medium">Cheaper</span> than Metro</small>
+            </td>
+            <td class="has-text-right">
+                <span class="is-hidden-mobile">LE</span> {{ product.price }}
+            </td>
+            <td class="has-text-right has-text-success-dark has-background-success-light">
+                -5%
+            </td>
+            <td class="is-hidden-mobile">
+                <p class="is-size-7">4 days ago</p>
+            </td>
+        </tr>
+        {% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

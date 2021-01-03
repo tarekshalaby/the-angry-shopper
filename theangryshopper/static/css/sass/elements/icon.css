@@ -1,0 +1,21 @@
+/* line 6, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/elements/icon.sass */
+.icon {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  height: 1.5rem;
+  width: 1.5rem; }
+  /* line 13, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/elements/icon.sass */
+  .icon.is-small {
+    height: 1rem;
+    width: 1rem; }
+  /* line 16, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/elements/icon.sass */
+  .icon.is-medium {
+    height: 2rem;
+    width: 2rem; }
+  /* line 19, /Users/tarekshalaby/Projects/The Angry Shopper/static/css/sass/elements/icon.sass */
+  .icon.is-large {
+    height: 3rem;
+    width: 3rem; }
+
+/*# sourceMappingURL=icon.css.map */

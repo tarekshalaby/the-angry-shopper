@@ -3,17 +3,14 @@ import requests
 import re
 from datetime import datetime
 import mysql.connector
-
-# MySQL database credentials
-db_user = ''
-db_pass = ''
+from db_config import mysql_configuration 
 
 # Connect to the main "the_angry_shopper" database and start connection
 db = mysql.connector.connect(
-		host="localhost",
-		user=db_user,
-		passwd=db_pass,
-		database="the_angry_shopper"
+		host= "localhost",
+		user= mysql_configuration['username'],
+		passwd= mysql_configuration['password'],
+		database= "the_angry_shopper"
 	)
 cursor = db.cursor()
 

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>The Angry Shopper | {% block title %}Compare Cairo's supermarkets. Track prices.{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.css') }}">
+        <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="#">
+                    <img src="{{ url_for('static', filename='images/the-angry-shopper-logo.png')}}">
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="supermakets-dropdown">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="supermakets-dropdown" class="navbar-menu">
+                <div class="navbar-start">
+                    <a href="#" class="navbar-item is-size-4">
+                        <span class="icon is-large">
+                            <span class="iconify" data-icon="bx:bx-git-compare"></span> 
+                        </span>
+                        <span>Compare</span>
+                    </a>
+                    <div class="navbar-item is-size-4 has-dropdown is-hoverable">
+                        <a href="{{ url_for('browse_supermarket_latest', supermarket=gourmet) }}" class="navbar-link is-large">
+                            <span class="icon is-large">
+                                <span class="iconify" data-icon="ps:cart-supermarket"></span>
+                            </span>
+                            <span>Browse</span>
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a href="{{ url_for('browse_supermarket_latest', supermarket=gourmet) }}" class="navbar-item has-text-centered">
+                                <img src="{{ url_for('static', filename='images/gourmet.png')}}" alt="Gourmet Egypt">
+                            </a>
+                            <hr class="navbar-divider">
+                            <a href="{{ url_for('browse_supermarket_latest', supermarket=metro) }}" class="navbar-item">
+                                <img src="{{ url_for('static', filename='images/metro.svg')}}" alt="Metro Supermarket">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="navbar-item is-size-4">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input is-large" type="text" placeholder="Search all products">
+                                <span class="icon is-large is-left">
+                                    <span class="iconify" data-icon="bx:bx-search" data-inline="false"></span>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <section class="section">
+            <div class="container">
+                <div class="columns">
+                    <div class="column content">
+                        <h1 class="has-text-weight-light">{% block page_headline %}{% endblock %}</h1>
+                    </div>
+                </div>
+                <div class="columns is-mobile is-0-mobile">
+                	{% block aside_list %}{% endblock %}
+                    <div class="column">
+                        <div class="content has-text-weight-light">
+                            <h4 class="is-flex is-align-items-center has-text-weight-light mb-0">
+                                <span class="icon is-large is-size-3 has-text-primary">
+                                    {% block section_icon %}<span class="iconify" data-icon="gg:live-photo"></span>{% endblock %}
+                                </span>
+                                <span class="has-text-weight-bold">{% block section_title %}Latest Changes{% endblock %}</span><span class="is-hidden-mobile">: {% block section_subtitle %}{% endblock %}</span>
+                            </h4>
+                            <p class="is-hidden-tablet">Subtitle</p>
+                        </div>
+                        {% block section_table %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>The Angry Shopper</strong> came out of the frustration of Cairo's supermarkets playing around with their prices and tricking us into paying more for less.
+                </p>
+                <p>
+                    This is a free and open-source project - check out the <a href="#">code on Github</a>. 
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>
