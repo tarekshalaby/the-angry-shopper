@@ -73,8 +73,6 @@
 
 {% block section_table %}
 
-{{ test }}
-
 <table class="table is-hoverable is-fullwidth has-text-weight-medium">
     <thead>
         <tr>
@@ -99,11 +97,17 @@
             <td class="has-text-right">
                 <span class="is-hidden-mobile">LE</span> {{ product.price }}
             </td>
-            <td class="has-text-right has-text-success-dark has-background-success-light">
-                -5%
+            <td class="has-text-right
+            	{% if product.difference < 0 %}
+            		has-text-success-dark has-background-success-light
+            	{% elif product.difference > 0 %}
+            		has-text-danger-dark has-background-danger-light
+            	{% endif %}
+            	">
+                {% if product.difference > 0 %}+{% endif %}{{ "%.1f"|format(product.difference) }}%
             </td>
             <td class="is-hidden-mobile">
-                <p class="is-size-7">4 days ago</p>
+                <p class="is-size-7 has-text-grey">{{ product.days.strftime('%b %-d') }}</p>
             </td>
         </tr>
         {% endfor %}
