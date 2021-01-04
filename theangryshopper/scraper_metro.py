@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 from datetime import datetime
+from decimal import Decimal
 import mysql.connector
 from db_config import mysql_configuration 
 
@@ -12,7 +13,7 @@ db = mysql.connector.connect(
 		passwd= mysql_configuration['password'],
 		database= "the_angry_shopper"
 	)
-cursor = db.cursor()
+cursor = db.cursor(buffered=True)
 
 # URLs of the different sections to scrape from Metro
 sections = ['Bakery/9', 'Beverage/22', 'Canned-Food/14', 'Confectionary/20', 'Dairy/6', 'Deli/5', 'Eatery/2', 'Fresh-Juices/8', 'Frozen-Food/10', 'Fruits/1', 'Commodities/15', 'Health&-Beauty/28', 'Home-Bake/16', 'Hot-Drinks/21', 'Meat/11', 'Milk/18', 'Paper-Products/25', 'Pets/17', 'Poultry/12', 'Sea-Food/13', 'Snacks/19', 'Vegetables/3']
@@ -42,7 +43,7 @@ for section in sections:
 				# Get the price, strip the currency. NULL is there isn't a price.
 				try:
 					value = product.find('p', class_='after').text
-					price = re.sub(r'[^\d.]', '', value)
+					price = Decimal(re.sub(r'[^\d.]', '', value))
 				except Exception as e:
 					price = None
 				url = product.find('a')['href']
@@ -61,9 +62,19 @@ for section in sections:
 				)
 				insert_data = (id, title, price, url, image, category, updated)
 
-				# Insert product info into database
-				cursor.execute(insert_statement, insert_data)
-				db.commit()
+				# Prepare query to see if product already exists
+				query_product = ("SELECT price FROM metro_products WHERE product_id = %s ORDER BY updated DESC")
+				product_id = (id,)
+				cursor.execute(query_product, product_id)
+				check_product = cursor.fetchone()
+				if check_product == None:
+					cursor.execute(insert_statement, insert_data)
+					db.commit()
+				else:
+					last_price = check_product[0]
+					if last_price != price:
+						cursor.execute(insert_statement, insert_data)
+						db.commit()
 
 			# If there's a link a next page, go there (after scraping all products on this page)
 			if soup.find_all('li', class_='page-item')[-1].a:

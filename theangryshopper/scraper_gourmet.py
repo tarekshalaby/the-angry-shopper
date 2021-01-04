@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from re import sub
 from datetime import datetime
+from decimal import Decimal
 import mysql.connector
 from db_config import mysql_configuration 
 
@@ -12,7 +13,7 @@ db = mysql.connector.connect(
 		passwd= mysql_configuration['password'],
 		database= "the_angry_shopper"
 	)
-cursor = db.cursor()
+cursor = db.cursor(buffered=True)
 
 # Main URL to scrape from Gourmet
 base_url = 'https://www.gourmetegypt.com'
@@ -35,7 +36,6 @@ for nav in soup.find_all('li', class_='ms-level0'):
 			sub_category_name = list_item.find('a').text.strip()
 			sub_category_link = list_item.find('a')['href']
 			if sub_category_link != 'javascript:void(0);':
-			
 				# Main function to grab information on products, taking the url (or page) as argument
 				def get_products(url):
 					# Start or restart counter to keep track of number of products scraped
@@ -51,7 +51,7 @@ for nav in soup.find_all('li', class_='ms-level0'):
 						# Find the price and strip the currency. If the product doesn't have a price, use NULL.   
 						try:
 							value = product.find('span', class_='price').text
-							price = sub(r'[^\d.]', '', value)
+							price = Decimal(sub(r'[^\d.]', '', value))
 						except Exception as e:
 							price = None
 						image = product.find('img', class_='product-image-photo')['src'].strip()
@@ -59,16 +59,26 @@ for nav in soup.find_all('li', class_='ms-level0'):
 						now = datetime.utcnow()
 						updated = now.strftime("%Y-%m-%d %H:%M:%S")
 
-						# Preparing SQL query to INSERT a record into the database.
+						# Database insert statement to use below		
 						insert_statement = (
 						   "INSERT INTO gourmet_products(product_id, title, size, price, url, image, category, updated)"
 						   "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 						)
 						insert_data = (id, title, size, price, url, image, sub_category_name, updated)
 
-						# Insert product info into database
-						cursor.execute(insert_statement, insert_data)
-						db.commit()
+						# Prepare query to see if product already exists
+						query_product = ("SELECT price FROM gourmet_products WHERE product_id = %s ORDER BY updated DESC")
+						product_id = (id,)
+						cursor.execute(query_product, product_id)
+						check_product = cursor.fetchone()
+						if check_product == None:
+							cursor.execute(insert_statement, insert_data)
+							db.commit()
+						else:
+							last_price = check_product[0]
+							if last_price != price:
+								cursor.execute(insert_statement, insert_data)
+								db.commit()
 
 					# If there's a link a next page, go there (after scraping all products on this page)
 					if soup.find('li', class_='pages-item-next'):
