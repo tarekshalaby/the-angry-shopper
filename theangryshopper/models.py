@@ -68,7 +68,7 @@ class CommonProducts(db.Model):
 	__tablename__ = 'common_products'
 	id = db.Column(db.Integer, primary_key=True)
 	gourmet_product_id = db.Column(db.Integer, db.ForeignKey('gourmet_products.product_id'))
-	metro_products_id = db.Column(db.Integer, db.ForeignKey('metro_products.product_id'))
+	metro_product_id = db.Column(db.Integer, db.ForeignKey('metro_products.product_id'))
 
 	def __repr__(self):
-		return f"CommonProducts('{self.id}, {self.gourmet_product_id} {self.metro_products_id}')"
+		return f"CommonProducts('{self.id}, {self.gourmet_product_id} {self.metro_product_id}')"

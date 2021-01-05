@@ -12,13 +12,16 @@ def home():
 
 @app.route('/compare')
 def compare_latest():
+	path = request.path
 	categories = db.session.query(Categories).order_by(Categories.title.asc())
-	latest = db.session.query(db.func.max(GourmetProducts.id)).group_by(GourmetProducts.product_id).all()
-	query = db.session.query(GourmetProducts).filter(GourmetProducts.id.in_(latest), GourmetProducts.price > 0)
-	limit = 50
-	products = query.order_by(GourmetProducts.updated.desc()).limit(limit).all()
 
-	return render_template('compare.html', products=products, count=limit, categories=categories) 
+	latest_gourmet_ids = db.session.query(db.func.max(GourmetProducts.id)).group_by(GourmetProducts.product_id).all()
+	latest_metro_ids = db.session.query(db.func.max(MetroProducts.id)).group_by(MetroProducts.product_id).all()
+
+	limit = 50
+	common_products = db.session.query(CommonProducts, GourmetProducts, MetroProducts).join(GourmetProducts, CommonProducts.gourmet_product_id == GourmetProducts.product_id).join(MetroProducts, CommonProducts.metro_product_id == MetroProducts.product_id).filter(GourmetProducts.id.in_(latest_gourmet_ids), GourmetProducts.price > 0, MetroProducts.id.in_(latest_metro_ids), MetroProducts.price > 0).order_by(db.func.greatest(GourmetProducts.updated, MetroProducts.updated).desc()).limit(limit).all()
+
+	return render_template('compare.html', products=common_products, categories=categories) 
 
 
 @app.route('/compare/<category>')

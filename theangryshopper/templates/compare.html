@@ -57,6 +57,8 @@
 
 {% block section_table %}
 
+{{ temp }}
+
 <table class="table is-hoverable is-fullwidth has-text-weight-medium">
     <thead>
         <tr>
@@ -74,16 +76,25 @@
     	{% for product in products %}
         <tr>
             <td>
-                <img src="{{ url_for('static', filename='images/placeholders/heinz_carolina_vinegar_gourmet.jpg') }}" alt="{{ product.title }}">
+                <img src="{{ url_for('static', filename='images/placeholders/heinz_carolina_vinegar_gourmet.jpg') }}" alt="{{ product.GourmetProducts.title }}">
+                <!-- <img src="{{ product.GourmetProducts.image }}" alt="{{ product.GourmetProducts.title }}"> -->
             </td>
             <td>
-                {{ product.title }}
+                {{ product.GourmetProducts.title }} {% if product.GourmetProducts.size %}- {{ product.GourmetProducts.size }}{% endif %}
             </td>
-            <td class="has-text-right">
-                <span class="is-hidden-mobile">LE</span> {{ product.price }}
+            <td class="has-text-right
+                {% if product.GourmetProducts.price < product.MetroProducts.price %}
+                    has-text-success-dark has-background-success-light
+                {% endif %}
+            ">
+                <span class="is-hidden-mobile">LE</span> {{ product.GourmetProducts.price }}
             </td>
-            <td class="has-text-right has-text-success-dark has-background-success-light">
-                <span class="is-hidden-mobile">LE</span> 49.00
+            <td class="has-text-right
+                {% if product.MetroProducts.price < product.GourmetProducts.price %}
+                    has-text-success-dark has-background-success-light
+                {% endif %}
+            ">
+                <span class="is-hidden-mobile">LE</span> {{ product.MetroProducts.price }}
             </td>
         </tr>
         {% endfor %}

@@ -92,7 +92,7 @@
                 <!-- <img src="{{ product.image }}" alt="{{ product.title }}"> -->
             </td>
             <td>
-                {{ product.title }} <a href="{{ product.url }}" target="_blank" class="is-size-6"><span class="iconify" data-icon="eva:external-link-fill"></span></a>
+                {{ product.title }}{% if product.size %} - {{ product.size }}{% endif %} <a href="{{ product.url }}" target="_blank" class="is-size-6"><span class="iconify" data-icon="eva:external-link-fill"></span></a>
                 <!-- <br><small class="has-text-weight-light has-text-grey-light"><span class="has-text-success has-text-weight-medium">Cheaper</span> than Metro</small> -->
             </td>
             <td class="has-text-right">
