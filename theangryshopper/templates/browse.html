@@ -26,7 +26,7 @@
     <aside class="menu">
         <ul class="menu-list is-size-6 has-text-weight-medium">
             <li>
-                <a href="#" class="has-text-primary-dark has-background-primary-light is-flex is-align-items-center">
+                <a href="{{ url_for('browse_supermarket_latest', supermarket=supermarket) }}" class="is-flex is-align-items-center {% if not path %}has-text-primary-dark has-background-primary-light{% endif %}">
                     <span class="icon is-large is-size-3">
                         <span class="iconify" data-icon="gg:live-photo"></span>
                     </span>
@@ -35,18 +35,18 @@
             </li>
             <li class="menu-label">Sections</li>
 
-	            {% for category in categories %}
+            {% for category in categories %}
 
-	            <li>
-	                <a href="{{ url_for('browse_supermarket_latest', supermarket=category.path) }}" class="is-flex is-align-items-center {% if path == '/compare/' + category.path %}has-text-primary-dark has-background-primary-light{% endif %}">
-	                    <span class="icon is-large is-size-3">
-	                        <span class="iconify" data-icon="{{ category.icon }}"></span>
-	                    </span>
-	                    <span class="is-hidden-mobile">{{ category.title }}</span>
-	                </a>
-	            </li>
+            <li>
+                <a href="{{ url_for('browse_supermarket_category', supermarket=supermarket, category=category.path) }}" class="is-flex is-align-items-center {% if path == '/compare/' + category.path %}has-text-primary-dark has-background-primary-light{% endif %}">
+                    <span class="icon is-large is-size-3">
+                        <span class="iconify" data-icon="{{ category.icon }}"></span>
+                    </span>
+                    <span class="is-hidden-mobile">{{ category.title }}</span>
+                </a>
+            </li>
 
-	            {% endfor %}
+            {% endfor %}
         </ul>
     </aside>
 </div>

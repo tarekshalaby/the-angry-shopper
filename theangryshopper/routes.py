@@ -38,9 +38,10 @@ def browse():
 	return ("Browse")
 
 
+supermarket_class = {'gourmet' : GourmetProducts, 'metro': MetroProducts}
+
 @app.route('/browse/<supermarket>')
 def browse_supermarket_latest(supermarket):
-	supermarket_class = {'gourmet' : GourmetProducts, 'metro': MetroProducts}
 	target = supermarket_class[supermarket]
 
 	categories = db.session.query(Categories).order_by(Categories.title.asc())
@@ -52,4 +53,29 @@ def browse_supermarket_latest(supermarket):
 
 	products = db.session.query(ultimate_prices, penultimate_prices.c.updated.label('days'), (((ultimate_prices.c.price - penultimate_prices.c.price)/penultimate_prices.c.price)*100).label('difference')).join(penultimate_prices, ultimate_prices.c.product_id == penultimate_prices.c.product_id).filter(ultimate_prices.c.price != penultimate_prices.c.price).limit(50).all()
 
-	return render_template('browse.html', categories=categories, products=products) 
+	return render_template('browse.html', supermarket=supermarket, categories=categories, products=products) 
+
+
+@app.route('/browse/<supermarket>/<category>')
+def browse_supermarket_category(supermarket, category):
+	path = request.path
+	target = supermarket_class[supermarket]
+
+	categories = db.session.query(Categories).order_by(Categories.title.asc())
+	active_category = db.session.query(Categories).filter(Categories.path == category).one()
+
+	return render_template('browse.html', supermarket=supermarket, path=path, categories=categories, active_category=active_category) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
