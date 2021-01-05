@@ -10,7 +10,7 @@
     <body>
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <a class="navbar-item" href="#">
+                <a class="navbar-item" href="{{ url_for('home') }}">
                     <img src="{{ url_for('static', filename='images/the-angry-shopper-logo.png')}}">
                 </a>
                 <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="supermakets-dropdown">
@@ -20,25 +20,25 @@
             </div>
             <div id="supermakets-dropdown" class="navbar-menu">
                 <div class="navbar-start">
-                    <a href="#" class="navbar-item is-size-4">
+                    <a href="{{ url_for('compare_latest') }}" class="navbar-item is-size-4">
                         <span class="icon is-large">
                             <span class="iconify" data-icon="bx:bx-git-compare"></span> 
                         </span>
                         <span>Compare</span>
                     </a>
                     <div class="navbar-item is-size-4 has-dropdown is-hoverable">
-                        <a href="{{ url_for('browse_supermarket_latest', supermarket=gourmet) }}" class="navbar-link is-large">
+                        <a href="{{ url_for('browse') }}" class="navbar-link is-large">
                             <span class="icon is-large">
                                 <span class="iconify" data-icon="ps:cart-supermarket"></span>
                             </span>
                             <span>Browse</span>
                         </a>
                         <div class="navbar-dropdown">
-                            <a href="{{ url_for('browse_supermarket_latest', supermarket=gourmet) }}" class="navbar-item has-text-centered">
+                            <a href="{{ url_for('browse_supermarket_latest', supermarket='gourmet') }}" class="navbar-item has-text-centered">
                                 <img src="{{ url_for('static', filename='images/gourmet.png')}}" alt="Gourmet Egypt">
                             </a>
                             <hr class="navbar-divider">
-                            <a href="{{ url_for('browse_supermarket_latest', supermarket=metro) }}" class="navbar-item">
+                            <a href="{{ url_for('browse_supermarket_latest', supermarket='metro') }}" class="navbar-item">
                                 <img src="{{ url_for('static', filename='images/metro.svg')}}" alt="Metro Supermarket">
                             </a>
                         </div>

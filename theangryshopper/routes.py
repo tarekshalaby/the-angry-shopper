@@ -35,7 +35,7 @@ def compare_category(category):
 
 @app.route('/browse/')
 def browse():
-	return ("Browse")
+	return redirect('/browse/gourmet')
 
 
 supermarket_class = {'gourmet' : GourmetProducts, 'metro': MetroProducts}

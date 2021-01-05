@@ -9,16 +9,16 @@
 <div class="column is-one-fifth">
     <div class="dropdown is-hoverable mb-5">
         <div class="dropdown-trigger">
-            <button class="button is-large" aria-haspopup="true" aria-controls="supermarkets-list">
+            <a class="button is-large" aria-haspopup="true" aria-controls="supermarkets-list" href="{{ url_for('browse_supermarket_latest', supermarket='gourmet') }}">
                 <img src="{{ url_for('static', filename='images/gourmet.png')}}" alt="Gourmet Egypt">
-            </button>
+            </a>
         </div>
         <div class="dropdown-menu" id="supermarkets-list" role="menu">
             <div class="dropdown-content">
                 <div class="dropdown-item">
-                    <button class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu4">
+                    <a class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu4" href="{{ url_for('browse_supermarket_latest', supermarket='metro') }}">
                         <img src="{{ url_for('static', filename='images/metro.svg')}}" alt="Metro Supermarket">
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
