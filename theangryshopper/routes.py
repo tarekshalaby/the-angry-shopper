@@ -1,7 +1,8 @@
 from flask import render_template, redirect, url_for, request
 from sqlalchemy import or_
 from theangryshopper import app, db
-from theangryshopper.models import Categories, GourmetProducts, GourmetCategories, MetroProducts, MetroCategories
+from theangryshopper.models import Categories, GourmetProducts, GourmetCategories, MetroProducts, MetroCategories, CommonProducts
+from datetime import date
 
 
 @app.route('/')
