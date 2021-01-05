@@ -64,18 +64,13 @@ def browse_supermarket_category(supermarket, category):
 	categories = db.session.query(Categories).order_by(Categories.title.asc())
 	active_category = db.session.query(Categories).filter(Categories.path == category).one()
 
-	return render_template('browse.html', supermarket=supermarket, path=path, categories=categories, active_category=active_category) 
+	ultimate_ids = db.session.query(db.func.max(target.id).label('max_id')).join(GourmetCategories, target.category == GourmetCategories.gourmet_category_title).join(Categories, GourmetCategories.category_id == Categories.id).filter(Categories.path == category).group_by(target.product_id).all()
+	penultimate_ids = db.session.query(db.func.max(target.id)).join(GourmetCategories, target.category == GourmetCategories.gourmet_category_title).join(Categories, GourmetCategories.category_id == Categories.id).filter(~target.id.in_(ultimate_ids), target.price > 0, Categories.path == category).group_by(target.product_id).all()
+	ultimate_prices = db.session.query(target).filter(target.id.in_(ultimate_ids), target.price > 0).subquery()
+	penultimate_prices = db.session.query(target.id, target.product_id, target.price, target.updated).filter(target.id.in_(penultimate_ids)).order_by(target.updated.desc()).subquery()
 
+	query = db.session.query(ultimate_prices, penultimate_prices.c.updated.label('days'), (((ultimate_prices.c.price - penultimate_prices.c.price)/penultimate_prices.c.price)*100).label('difference')).join(penultimate_prices, ultimate_prices.c.product_id == penultimate_prices.c.product_id)
+	products = query.order_by(ultimate_prices.c.title.asc())
+	count = query.count()
 
-
-
-
-
-
-
-
-
-
-
-
-
+	return render_template('browse.html', supermarket=supermarket, path=path, categories=categories, active_category=active_category, products=products, count=count) 

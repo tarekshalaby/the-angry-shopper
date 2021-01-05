@@ -38,7 +38,7 @@
             {% for category in categories %}
 
             <li>
-                <a href="{{ url_for('browse_supermarket_category', supermarket=supermarket, category=category.path) }}" class="is-flex is-align-items-center {% if path == '/compare/' + category.path %}has-text-primary-dark has-background-primary-light{% endif %}">
+                <a href="{{ url_for('browse_supermarket_category', supermarket=supermarket, category=category.path) }}" class="is-flex is-align-items-center {% if path == '/browse/' + supermarket + '/' + category.path %}has-text-primary-dark has-background-primary-light{% endif %}">
                     <span class="icon is-large is-size-3">
                         <span class="iconify" data-icon="{{ category.icon }}"></span>
                     </span>
@@ -89,6 +89,7 @@
         <tr>
             <td>
                 <img src="{{ url_for('static', filename='images/placeholders/heinz_carolina_vinegar_gourmet.jpg') }}" alt="{{ product.title }}">
+                <!-- <img src="{{ product.image }}" alt="{{ product.title }}"> -->
             </td>
             <td>
                 {{ product.title }} <a href="{{ product.url }}" target="_blank" class="is-size-6"><span class="iconify" data-icon="eva:external-link-fill"></span></a><br>
@@ -102,12 +103,14 @@
             		has-text-success-dark has-background-success-light
             	{% elif product.difference > 0 %}
             		has-text-danger-dark has-background-danger-light
+            	{% elif product.difference == 0 %}
+            		has-text-grey-light
             	{% endif %}
             	">
                 {% if product.difference > 0 %}+{% endif %}{{ "%.1f"|format(product.difference) }}%
             </td>
             <td class="is-hidden-mobile">
-                <p class="is-size-7 has-text-grey">{{ product.days.strftime('%b %-d') }}</p>
+                <p class="is-size-7 has-text-grey">{% if product.difference != 0 %}{{ product.days.strftime('%b %-d') }}{% endif %}</p>
             </td>
         </tr>
         {% endfor %}
