@@ -8,10 +8,9 @@ class Categories(db.Model):
 	title = db.Column(db.String(100), unique=True, nullable=False)
 	path = db.Column(db.String(100), unique=True, nullable=False)
 	icon = db.Column(db.String(100))
-	gourmet_categories = db.relationship('GourmetCategories', backref='parent_category')
 
 	def __repr__(self):
-		return f"Categories('{self.id}', '{self.title}', '{self.path}', '{self.icon}', '{self.gourmet_categories}')"
+		return f"Categories('{self.id}', '{self.title}', '{self.path}', '{self.icon}')"
 
 
 class GourmetProducts(db.Model):
@@ -33,11 +32,11 @@ class GourmetProducts(db.Model):
 class GourmetCategories(db.Model):
 	__tablename__ = 'gourmet_categories'
 	id = db.Column(db.Integer, primary_key=True)
-	gourmet_category_title = db.Column(db.String(100))
+	category_title = db.Column(db.String(100))
 	category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
 	def __repr__(self):
-		return f"GourmetCategories('{self.gourmet_category_title}, {self.category_id}')"
+		return f"GourmetCategories('{self.category_title}, {self.category_id}')"
 
 
 class MetroProducts(db.Model):
@@ -53,3 +52,13 @@ class MetroProducts(db.Model):
 
 	def __repr__(self):
 		return f"MetroProducts('{self.title}', {self.price}, '{self.url}', '{self.image}', '{self.category}')"
+
+
+class MetroCategories(db.Model):
+	__tablename__ = 'metro_categories'
+	id = db.Column(db.Integer, primary_key=True)
+	category_title = db.Column(db.String(100))
+	category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+
+	def __repr__(self):
+		return f"MetroCategories('{self.category_title}, {self.category_id}')"
