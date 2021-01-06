@@ -50,6 +50,12 @@ def browse():
 @app.route('/browse/<supermarket>')
 def browse_supermarket_latest(supermarket):
 	supermarket_products_class = supermarkets[supermarket]['products_class']
+	supermarket_logo = supermarkets[supermarket]['logo']
+
+	for competitor in supermarkets:
+		if competitor != supermarket:
+			competitor_key = competitor
+			competitor_logo = supermarkets[competitor]['logo']
 
 	categories = db.session.query(Categories).order_by(Categories.title.asc())
 
@@ -60,7 +66,7 @@ def browse_supermarket_latest(supermarket):
 
 	products = db.session.query(ultimate_prices, penultimate_prices.c.updated.label('days'), (((ultimate_prices.c.price - penultimate_prices.c.price)/penultimate_prices.c.price)*100).label('difference')).join(penultimate_prices, ultimate_prices.c.product_id == penultimate_prices.c.product_id).filter(ultimate_prices.c.price != penultimate_prices.c.price).limit(50).all()
 
-	return render_template('browse.html', supermarket=supermarket, categories=categories, products=products) 
+	return render_template('browse.html', supermarket=supermarket, supermarket_logo=supermarket_logo, categories=categories, products=products, competitor=competitor_key, competitor_logo=competitor_logo) 
 
 
 @app.route('/browse/<supermarket>/<category>')
@@ -71,12 +77,15 @@ def browse_supermarket_category(supermarket, category):
 	supermarket_products_class = supermarkets[supermarket]['products_class']
 	supermarket_categories_class = supermarkets[supermarket]['categories_class']
 	supermarket_products_id = supermarkets[supermarket]['common_products_id']
+	supermarket_logo = supermarkets[supermarket]['logo']
 
 	for competitor in supermarkets:
 		if competitor != supermarket:
+			competitor_key = competitor
 			competitor_name = supermarkets[competitor]['name']
 			competitor_products_class = supermarkets[competitor]['products_class']
 			competitor_products_id = supermarkets[competitor]['common_products_id']
+			competitor_logo = supermarkets[competitor]['logo']
 
 	categories = db.session.query(Categories).order_by(Categories.title.asc())
 	active_category = db.session.query(Categories).filter(Categories.path == category).one()
@@ -94,4 +103,4 @@ def browse_supermarket_category(supermarket, category):
 	products = query.order_by(ultimate_prices.c.title.asc())
 	count = query.count()
 
-	return render_template('browse.html', supermarket=supermarket, path=path, categories=categories, active_category=active_category, products=products, count=count, competitor_name=competitor_name) 
+	return render_template('browse.html', supermarket=supermarket, supermarket_logo=supermarket_logo, path=path, categories=categories, active_category=active_category, products=products, count=count, competitor=competitor_key, competitor_name=competitor_name, competitor_logo=competitor_logo) 

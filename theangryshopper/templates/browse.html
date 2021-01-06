@@ -9,15 +9,15 @@
 <div class="column is-one-fifth">
     <div class="dropdown is-hoverable mb-5">
         <div class="dropdown-trigger">
-            <a class="button is-large" aria-haspopup="true" aria-controls="supermarkets-list" href="{{ url_for('browse_supermarket_latest', supermarket='gourmet') }}">
-                <img src="{{ url_for('static', filename='images/gourmet.png')}}" alt="Gourmet Egypt">
+            <a class="button is-large" aria-haspopup="true" aria-controls="supermarkets-list" href="{{ url_for('browse_supermarket_latest', supermarket=supermarket) }}">
+                <img src="{{ url_for('static', filename='images/')}}{{ supermarket_logo }}" alt="{{ supermarket }}">
             </a>
         </div>
         <div class="dropdown-menu" id="supermarkets-list" role="menu">
             <div class="dropdown-content">
                 <div class="dropdown-item">
-                    <a class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu4" href="{{ url_for('browse_supermarket_latest', supermarket='metro') }}">
-                        <img src="{{ url_for('static', filename='images/metro.svg')}}" alt="Metro Supermarket">
+                    <a class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu4" href="{{ url_for('browse_supermarket_latest', supermarket=competitor) }}">
+                        <img src="{{ url_for('static', filename='images/')}}{{ competitor_logo }}" alt="{{ competitor }}">
                     </a>
                 </div>
             </div>
@@ -72,6 +72,8 @@
 {% block section_subtitle %}{{ count }} products.{% endblock %}
 
 {% block section_table %}
+
+{{ competitor_key }}
 
 <table class="table is-hoverable is-fullwidth has-text-weight-medium">
     <thead>

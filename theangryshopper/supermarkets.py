@@ -5,12 +5,14 @@ supermarkets = {
 		'name': 'Gourmet',
 		'products_class': GourmetProducts,
 		'categories_class': GourmetCategories,
-		'common_products_id': CommonProducts.gourmet_product_id
+		'common_products_id': CommonProducts.gourmet_product_id,
+		'logo': 'gourmet.png'
 	},
 	'metro': {
 		'name': 'Metro',
 		'products_class': MetroProducts,
 		'categories_class': MetroCategories,
-		'common_products_id': CommonProducts.metro_product_id
+		'common_products_id': CommonProducts.metro_product_id,
+		'logo': 'metro.svg'
 	}
 }
