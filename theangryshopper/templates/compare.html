@@ -80,7 +80,7 @@
                 <!-- <img src="{{ product.GourmetProducts.image }}" alt="{{ product.GourmetProducts.title }}"> -->
             </td>
             <td>
-                {{ product.GourmetProducts.title }} {% if product.GourmetProducts.size %}- {{ product.GourmetProducts.size }}{% endif %}
+                {{ product.GourmetProducts.title }}{% if product.GourmetProducts.size %} - {{ product.GourmetProducts.size }}{% endif %}
             </td>
             <td class="has-text-right
                 {% if product.GourmetProducts.price < product.MetroProducts.price %}

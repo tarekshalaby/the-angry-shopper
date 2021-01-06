@@ -2,11 +2,8 @@ from flask import render_template, redirect, url_for, request
 from sqlalchemy import or_
 from theangryshopper import app, db
 from theangryshopper.models import Categories, GourmetProducts, GourmetCategories, MetroProducts, MetroCategories, CommonProducts
+from theangryshopper.supermarkets import supermarkets
 from datetime import date
-
-
-supermarket_products_class = {'gourmet' : GourmetProducts, 'metro': MetroProducts}
-supermarket_categories_class = {'gourmet': GourmetCategories, 'metro': MetroCategories}
 
 
 @app.route('/')
@@ -52,14 +49,14 @@ def browse():
 
 @app.route('/browse/<supermarket>')
 def browse_supermarket_latest(supermarket):
-	supermarket_products = supermarket_products_class[supermarket]
+	supermarket_products_class = supermarkets[supermarket]['products_class']
 
 	categories = db.session.query(Categories).order_by(Categories.title.asc())
 
-	ultimate_ids = db.session.query(db.func.max(supermarket_products.id).label('max_id')).group_by(supermarket_products.product_id).all()
-	penultimate_ids = db.session.query(db.func.max(supermarket_products.id)).filter(~supermarket_products.id.in_(ultimate_ids), supermarket_products.price > 0).group_by(supermarket_products.product_id).all()
-	ultimate_prices = db.session.query(supermarket_products).filter(supermarket_products.id.in_(ultimate_ids), supermarket_products.price > 0).subquery()
-	penultimate_prices = db.session.query(supermarket_products.id, supermarket_products.product_id, supermarket_products.price, supermarket_products.updated).filter(supermarket_products.id.in_(penultimate_ids)).order_by(supermarket_products.updated.desc()).subquery()
+	ultimate_ids = db.session.query(db.func.max(supermarket_products_class.id).label('max_id')).group_by(supermarket_products_class.product_id).all()
+	penultimate_ids = db.session.query(db.func.max(supermarket_products_class.id)).filter(~supermarket_products_class.id.in_(ultimate_ids), supermarket_products_class.price > 0).group_by(supermarket_products_class.product_id).all()
+	ultimate_prices = db.session.query(supermarket_products_class).filter(supermarket_products_class.id.in_(ultimate_ids), supermarket_products_class.price > 0).subquery()
+	penultimate_prices = db.session.query(supermarket_products_class.id, supermarket_products_class.product_id, supermarket_products_class.price, supermarket_products_class.updated).filter(supermarket_products_class.id.in_(penultimate_ids)).order_by(supermarket_products_class.updated.desc()).subquery()
 
 	products = db.session.query(ultimate_prices, penultimate_prices.c.updated.label('days'), (((ultimate_prices.c.price - penultimate_prices.c.price)/penultimate_prices.c.price)*100).label('difference')).join(penultimate_prices, ultimate_prices.c.product_id == penultimate_prices.c.product_id).filter(ultimate_prices.c.price != penultimate_prices.c.price).limit(50).all()
 
@@ -69,23 +66,32 @@ def browse_supermarket_latest(supermarket):
 @app.route('/browse/<supermarket>/<category>')
 def browse_supermarket_category(supermarket, category):
 	path = request.path
-	supermarket_products = supermarket_products_class[supermarket]
-	supermarket_categories = supermarket_categories_class[supermarket]
+
+	supermarket_name = supermarkets[supermarket]['name']
+	supermarket_products_class = supermarkets[supermarket]['products_class']
+	supermarket_categories_class = supermarkets[supermarket]['categories_class']
+	supermarket_products_id = supermarkets[supermarket]['common_products_id']
+
+	for competitor in supermarkets:
+		if competitor != supermarket:
+			competitor_name = supermarkets[competitor]['name']
+			competitor_products_class = supermarkets[competitor]['products_class']
+			competitor_products_id = supermarkets[competitor]['common_products_id']
 
 	categories = db.session.query(Categories).order_by(Categories.title.asc())
 	active_category = db.session.query(Categories).filter(Categories.path == category).one()
 
-	ultimate_ids = db.session.query(db.func.max(supermarket_products.id).label('max_id')).join(supermarket_categories, supermarket_products.category == supermarket_categories.category_title).join(Categories, supermarket_categories.category_id == Categories.id).filter(Categories.path == category).group_by(supermarket_products.product_id).all()
-	penultimate_ids = db.session.query(db.func.max(supermarket_products.id)).join(supermarket_categories, supermarket_products.category == supermarket_categories.category_title).join(Categories, supermarket_categories.category_id == Categories.id).filter(~supermarket_products.id.in_(ultimate_ids), supermarket_products.price > 0, Categories.path == category).group_by(supermarket_products.product_id).all()
-	ultimate_prices = db.session.query(supermarket_products).filter(supermarket_products.id.in_(ultimate_ids), supermarket_products.price > 0).subquery()
-	penultimate_prices = db.session.query(supermarket_products.id, supermarket_products.product_id, supermarket_products.price, supermarket_products.updated).filter(supermarket_products.id.in_(penultimate_ids)).order_by(supermarket_products.updated.desc()).subquery()
+	ultimate_ids = db.session.query(db.func.max(supermarket_products_class.id).label('max_id')).join(supermarket_categories_class, supermarket_products_class.category == supermarket_categories_class.category_title).join(Categories, supermarket_categories_class.category_id == Categories.id).filter(Categories.path == category).group_by(supermarket_products_class.product_id).all()
+	penultimate_ids = db.session.query(db.func.max(supermarket_products_class.id)).join(supermarket_categories_class, supermarket_products_class.category == supermarket_categories_class.category_title).join(Categories, supermarket_categories_class.category_id == Categories.id).filter(~supermarket_products_class.id.in_(ultimate_ids), supermarket_products_class.price > 0, Categories.path == category).group_by(supermarket_products_class.product_id).all()
+	ultimate_prices = db.session.query(supermarket_products_class).filter(supermarket_products_class.id.in_(ultimate_ids), supermarket_products_class.price > 0).subquery()
+	penultimate_prices = db.session.query(supermarket_products_class.id, supermarket_products_class.product_id, supermarket_products_class.price, supermarket_products_class.updated).filter(supermarket_products_class.id.in_(penultimate_ids)).order_by(supermarket_products_class.updated.desc()).subquery()
 
-	# temp = db.session.query(db.func.max(MetroProducts.id).label('max_id')).join(MetroCategories, MetroProducts.category == MetroCategories.category_title).join(Categories, MetroCategories.category_id == Categories.id).filter(Categories.path == category).group_by(MetroProducts.product_id).all()
+	competitor_ids = db.session.query(db.func.max(competitor_products_class.id)).group_by(competitor_products_class.product_id).all()
+	competitor_products = db.session.query(competitor_products_class).filter(competitor_products_class.id.in_(competitor_ids)).subquery()
 
-	# query = db.session.query(ultimate_prices, penultimate_prices.c.updated.label('days'), (((ultimate_prices.c.price - penultimate_prices.c.price)/penultimate_prices.c.price)*100).label('difference')).join(penultimate_prices, ultimate_prices.c.product_id == penultimate_prices.c.product_id).join(CommonProducts, CommonProducts.gourmet_product_id == ultimate_prices.c.product_id, isouter=True).join(MetroProducts, MetroProducts.product_id == CommonProducts.metro_product_id, isouter=True).filter(MetroProducts.id.in_(temp))
+	query = db.session.query(ultimate_prices, penultimate_prices.c.updated.label('days'), (((ultimate_prices.c.price - penultimate_prices.c.price)/penultimate_prices.c.price)*100).label('difference'), competitor_products.c.price.label('competitor_price')).join(penultimate_prices, ultimate_prices.c.product_id == penultimate_prices.c.product_id).join(CommonProducts, supermarket_products_id == ultimate_prices.c.product_id, isouter=True).join(competitor_products, competitor_products.c.product_id == competitor_products_id, isouter=True)
 
-	query = db.session.query(ultimate_prices, penultimate_prices.c.updated.label('days'), (((ultimate_prices.c.price - penultimate_prices.c.price)/penultimate_prices.c.price)*100).label('difference')).join(penultimate_prices, ultimate_prices.c.product_id == penultimate_prices.c.product_id)
 	products = query.order_by(ultimate_prices.c.title.asc())
 	count = query.count()
 
-	return render_template('browse.html', supermarket=supermarket, path=path, categories=categories, active_category=active_category, products=products, count=count) 
+	return render_template('browse.html', supermarket=supermarket, path=path, categories=categories, active_category=active_category, products=products, count=count, competitor_name=competitor_name) 
