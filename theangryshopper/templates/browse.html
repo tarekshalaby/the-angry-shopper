@@ -80,7 +80,7 @@
         <tr>
             <th class="thumbnail-column"></th>
             <th></th>
-            <th class="price-column"></th>    
+            <th class="price-column"></th>
             <th class="change-column"></th>
             <th class="updated-column is-hidden-mobile"></th>
         </tr>
@@ -89,8 +89,7 @@
     	{% for product in products %}
         <tr>
             <td>
-                <img src="{{ url_for('static', filename='images/placeholders/heinz_carolina_vinegar_gourmet.jpg') }}" alt="{{ product.title }}">
-                <!-- <img src="{{ product.image }}" alt="{{ product.title }}"> -->
+                <img src="{{ url_for('static', filename='images/products/') }}{{ supermarket }}/{{ product.product_id }}.jpg" alt="{{ product.title }}">
             </td>
             <td>
                 {{ product.title }}{% if product.size %} - {{ product.size }}{% endif %} <a href="{{ product.url }}" target="_blank" class="is-size-6"><span class="iconify" data-icon="eva:external-link-fill"></span></a>

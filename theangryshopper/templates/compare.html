@@ -74,8 +74,7 @@
     	{% for product in products %}
         <tr>
             <td>
-                <img src="{{ url_for('static', filename='images/placeholders/heinz_carolina_vinegar_gourmet.jpg') }}" alt="{{ product.GourmetProducts.title }}">
-                <!-- <img src="{{ product.GourmetProducts.image }}" alt="{{ product.GourmetProducts.title }}"> -->
+                <img src="{{ url_for('static', filename='images/products/') }}gourmet/{{ product.product_id }}.jpg" alt="{{ product.GourmetProducts.title }}">
             </td>
             <td>
                 {{ product.GourmetProducts.title }}{% if product.GourmetProducts.size %} - {{ product.GourmetProducts.size }}{% endif %}

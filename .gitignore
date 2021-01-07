@@ -1,4 +1,5 @@
 theangryshopper/db_config.py
+theangryshopper/static/images/products
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
