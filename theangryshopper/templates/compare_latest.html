@@ -46,10 +46,10 @@
 {% endblock %}
 
 {% block section_title %}
-    {{ active_category.title }}
+    Latest Changes
 {% endblock %}
 
-{% block section_subtitle %}{{ count }} products compared.{% endblock %}
+{% block section_subtitle %}Recently updated products compared.{% endblock %}
 
 {% block section_table %}
 
@@ -67,7 +67,7 @@
         </tr>
     </thead>
     <tbody>
-    	{% for product in products.items %}
+    	{% for product in products %}
         <tr>
             <td>
                 <img src="{{ url_for('static', filename='images/products/') }}gourmet/{{ product.GourmetProducts.product_id }}.jpg" alt="{{ product.GourmetProducts.title }}">
@@ -93,25 +93,5 @@
         {% endfor %}
     </tbody>
 </table>
-
-{% endblock %}
-
-{% block pagination %}
-
-{% if products.has_next or products.has_prev %}
-<nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
-    {% if products.has_prev %}<a class="pagination-previous" href="{{ url_for('compare_category', category=current_category, page=products.prev_num) }}">Previous</a>{% endif %}
-    {% if products.has_next %}<a class="pagination-next" href="{{ url_for('compare_category', category=current_category, page=products.next_num) }}">Next page</a>{% endif %}
-    <ul class="pagination-list">
-    {% for page_number in products.iter_pages() %}
-        {% if page_number %}
-            <li><a class="pagination-link {% if products.page == page_number %}is-current{% endif %}" aria-label="Goto page {{ page_number }}" href="{{ url_for('compare_category', category=current_category, page=page_number) }}">{{ page_number }}</a></li>
-        {% else %}
-            <li><span class="pagination-ellipsis">&hellip;</span></li>
-        {% endif %}
-    {% endfor %}
-    </ul>
-</nav>
-{% endif %}
 
 {% endblock %}
