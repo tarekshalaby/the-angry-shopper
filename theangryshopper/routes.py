@@ -38,7 +38,7 @@ def compare_category(category):
 	query = db.session.query(CommonProducts, GourmetProducts, MetroProducts).join(GourmetProducts, CommonProducts.gourmet_product_id == GourmetProducts.product_id).join(MetroProducts, CommonProducts.metro_product_id == MetroProducts.product_id).filter(GourmetProducts.id.in_(latest_gourmet_ids), GourmetProducts.price > 0, MetroProducts.id.in_(latest_metro_ids), MetroProducts.price > 0)
 
 	page = request.args.get('page', 1, type=int)
-	products = query.order_by(GourmetProducts.title.asc()).paginate(page=page, per_page=30)
+	products = query.order_by(GourmetProducts.title.asc()).paginate(page=page, per_page=50)
 	count = query.count()
 
 	return render_template('compare.html', current_category=category, active_category=active_category, products=products, count=count, categories=categories, path=path) 
@@ -66,7 +66,7 @@ def browse_supermarket_latest(supermarket):
 	ultimate_prices = db.session.query(supermarket_products_class).filter(supermarket_products_class.id.in_(ultimate_ids), supermarket_products_class.price > 0).subquery()
 	penultimate_prices = db.session.query(supermarket_products_class.id, supermarket_products_class.product_id, supermarket_products_class.price, supermarket_products_class.updated).filter(supermarket_products_class.id.in_(penultimate_ids)).order_by(supermarket_products_class.updated.desc()).subquery()
 
-	products = db.session.query(ultimate_prices, penultimate_prices.c.updated.label('days'), (((ultimate_prices.c.price - penultimate_prices.c.price)/penultimate_prices.c.price)*100).label('difference')).join(penultimate_prices, ultimate_prices.c.product_id == penultimate_prices.c.product_id).filter(ultimate_prices.c.price != penultimate_prices.c.price).limit(30).all()
+	products = db.session.query(ultimate_prices, penultimate_prices.c.updated.label('days'), (((ultimate_prices.c.price - penultimate_prices.c.price)/penultimate_prices.c.price)*100).label('difference')).join(penultimate_prices, ultimate_prices.c.product_id == penultimate_prices.c.product_id).filter(ultimate_prices.c.price != penultimate_prices.c.price).order_by(ultimate_prices.c.updated.desc()).limit(30).all()
 
 	return render_template('browse_latest.html', supermarket=supermarket, supermarket_logo=supermarket_logo, categories=categories, products=products, competitor=competitor_key, competitor_logo=competitor_logo) 
 
@@ -119,7 +119,7 @@ def browse_supermarket_category(supermarket, category):
 		.join(competitor_products, competitor_products.c.product_id == competitor_products_id, isouter=True)
 
 	page = request.args.get('page', 1, type=int)
-	products = query.order_by(ultimate_prices.c.title.asc()).paginate(page=page, per_page=30)
+	products = query.order_by(ultimate_prices.c.title.asc()).paginate(page=page, per_page=50)
 	count = query.count()
 
 	return render_template('browse.html', supermarket=supermarket, supermarket_logo=supermarket_logo, path=path, categories=categories, active_category=active_category, current_category=category, products=products, count=count, competitor=competitor_key, competitor_name=competitor_name, competitor_logo=competitor_logo) 

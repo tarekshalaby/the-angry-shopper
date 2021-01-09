@@ -106,7 +106,7 @@
                 {% if product.difference > 0 %}+{% endif %}{{ "%.1f"|format(product.difference) }}%
             </td>
             <td class="is-hidden-mobile">
-                <p class="is-size-7 has-text-grey">{% if product.difference != 0 %}{{ product.days.strftime('%b %-d') }}{% endif %}</p>
+                <p class="is-size-7 has-text-grey">{% if product.difference != 0 %}{{ product.updated.strftime('%b %-d') }}{% endif %}</p>
             </td>
         </tr>
         {% endfor %}
