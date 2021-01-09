@@ -69,7 +69,7 @@
     <tbody>
     	{% for product in products.items %}
         <tr>
-            <td>
+            <td class="has-text-centered">
                 <img src="{{ url_for('static', filename='images/products/') }}gourmet/{{ product.GourmetProducts.product_id }}.jpg" alt="{{ product.GourmetProducts.title }}">
             </td>
             <td>
