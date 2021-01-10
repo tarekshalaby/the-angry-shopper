@@ -2,6 +2,8 @@ theangryshopper/config.py
 theangryshopper/db_config.py
 theangryshopper/static/images/products
 
+theangryshopper/__pycache__
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
