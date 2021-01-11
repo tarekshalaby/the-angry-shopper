@@ -4,13 +4,13 @@ from re import sub
 from datetime import datetime
 from decimal import Decimal
 import mysql.connector
-from os import environ
+import config
 
 # Connect to the main "the_angry_shopper" database and start connection
 db = mysql.connector.connect(
 		host= "localhost",
-		user= environ.get("DB_USER"),
-		passwd= environ.get("DB_PASS"),
+		user= config.mysql_configuration["username"],
+		passwd= config.mysql_configuration["password"],
 		database= "the_angry_shopper"
 	)
 cursor = db.cursor(buffered=True)
