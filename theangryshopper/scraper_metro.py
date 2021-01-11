@@ -4,7 +4,7 @@ import re
 from datetime import datetime
 from decimal import Decimal
 import mysql.connector
-from os import environ
+import config
 
 # Connect to the main "the_angry_shopper" database and start connection
 db = mysql.connector.connect(
