@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, request
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
 from theangryshopper import app, db
 from theangryshopper.models import Categories, GourmetProducts, GourmetCategories, MetroProducts, MetroCategories, CommonProducts
 from theangryshopper.supermarkets import supermarkets
@@ -61,8 +61,8 @@ def browse_supermarket_latest(supermarket):
 
 	categories = db.session.query(Categories).order_by(Categories.title.asc())
 
-	ultimate_ids = db.session.query(db.func.max(supermarket_products_class.id).label('max_id')).group_by(supermarket_products_class.product_id).all()
-	penultimate_ids = db.session.query(db.func.max(supermarket_products_class.id)).filter(~supermarket_products_class.id.in_(ultimate_ids), supermarket_products_class.price > 0).group_by(supermarket_products_class.product_id).all()
+	ultimate_ids = db.session.query(db.func.max(supermarket_products_class.id).label('max_id')).group_by(supermarket_products_class.product_id).subquery()
+	penultimate_ids = db.session.query(db.func.max(supermarket_products_class.id)).filter(~supermarket_products_class.id.in_(ultimate_ids), supermarket_products_class.price > 0).group_by(supermarket_products_class.product_id).subquery()
 	ultimate_prices = db.session.query(supermarket_products_class).filter(supermarket_products_class.id.in_(ultimate_ids), supermarket_products_class.price > 0).subquery()
 	penultimate_prices = db.session.query(supermarket_products_class.id, supermarket_products_class.product_id, supermarket_products_class.price, supermarket_products_class.updated).filter(supermarket_products_class.id.in_(penultimate_ids)).order_by(supermarket_products_class.updated.desc()).subquery()
 
