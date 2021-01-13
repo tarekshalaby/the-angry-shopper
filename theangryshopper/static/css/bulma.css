@@ -10024,38 +10024,38 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 /* line 5, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/sass/layout/footer.sass */
 .footer {
   background-color: #fafafa;
-  padding: 3rem 1.5rem 6rem; }
+  padding: 2rem 1.5rem 2rem; }
 
-/* line 25, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
+/* line 27, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
 h1 {
   color: #37474F; }
 
-/* line 28, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
+/* line 30, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
 .table td {
   line-height: 1;
   vertical-align: middle; }
-  /* line 31, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
+  /* line 33, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
   .table td thead {
     line-height: 3; }
-  /* line 33, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
+  /* line 35, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
   .table td img {
     min-height: 40px;
     max-height: 80px; }
 
-/* line 37, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
+/* line 39, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
 .thumbnail-column {
   min-width: 80px;
   width: 10%; }
 
-/* line 41, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
+/* line 43, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
 .price-column {
   width: 15%; }
 
-/* line 44, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
+/* line 46, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
 .change-column {
   width: 5%; }
 
-/* line 47, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
+/* line 49, /Users/tarekshalaby/Projects/The Angry Shopper/the-angry-shopper/theangryshopper/static/css/bulma.sass */
 .updated-column {
   width: 10%; }
 
